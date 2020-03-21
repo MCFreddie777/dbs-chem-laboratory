@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.7.28)
 # Database: nmr2web
-# Generation Time: 2020-03-21 5:00:53 PM +0000
+# Generation Time: 2020-03-21 6:27:35 PM +0000
 # ************************************************************
 
 
@@ -181,8 +181,6 @@ CREATE TABLE `users` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `login` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
   `role_id` bigint(20) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_login_unique` (`login`),
