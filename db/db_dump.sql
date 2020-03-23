@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.7.28)
 # Database: nmr2web
-# Generation Time: 2020-03-21 6:27:35 PM +0000
+# Generation Time: 2020-03-23 12:07:43 AM +0000
 # ************************************************************
 
 
@@ -121,9 +121,9 @@ CREATE TABLE `samples` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) unsigned NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `amount` decimal(8,2) DEFAULT NULL,
+  `amount` int(11) DEFAULT NULL,
   `structure` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `note` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `note` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `spectrometer_id` bigint(20) unsigned NOT NULL,
