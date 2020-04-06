@@ -15,7 +15,7 @@ CREATE TABLE `grants` (
   `name` varchar(255) NOT NULL
 );
 
-CREATE TABLE `users_grants` (
+CREATE TABLE `grants_users` (
   `id` bigint PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `user_id` bigint NOT NULL,
   `grant_id` bigint UNIQUE NOT NULL
@@ -31,16 +31,22 @@ CREATE TABLE `samples` (
   `created_at` timestamp NOT NULL,
   `modified_at` timestamp,
   `spectrometer_id` bigint NOT NULL,
-  `lab_id` bigint,
+  `analysis_id` bigint,
   `solvent_id` bigint NOT NULL,
   `grant_id` bigint
 );
 
-CREATE TABLE `labs` (
+CREATE TABLE `statuses` (
+  `id` bigint PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `name` varchar(255)
+);
+
+CREATE TABLE `analyses` (
   `id` bigint PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `user_id` bigint NOT NULL,
-  `status` varchar(255) NOT NULL,
-  `modified_at` timestamp
+  `status_id` bigint,
+  `modified_at` timestamp,
+  `lab_id` bigint NOT NULL
 );
 
 CREATE TABLE `solvents` (
@@ -54,20 +60,30 @@ CREATE TABLE `spectrometers` (
   `type` varchar(255) NOT NULL
 );
 
+CREATE TABLE `labs` (
+  `id` bigint PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `name` varchar(255),
+  `addresss` text
+);
+
 ALTER TABLE `users` ADD FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`);
 
-ALTER TABLE `users_grants` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+ALTER TABLE `grants_users` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
-ALTER TABLE `users_grants` ADD FOREIGN KEY (`grant_id`) REFERENCES `grants` (`id`);
+ALTER TABLE `grants_users` ADD FOREIGN KEY (`grant_id`) REFERENCES `grants` (`id`);
 
 ALTER TABLE `samples` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 ALTER TABLE `samples` ADD FOREIGN KEY (`spectrometer_id`) REFERENCES `spectrometers` (`id`);
 
-ALTER TABLE `samples` ADD FOREIGN KEY (`lab_id`) REFERENCES `labs` (`id`);
+ALTER TABLE `analyses` ADD FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`);
+
+ALTER TABLE `analyses` ADD FOREIGN KEY (`id`) REFERENCES `samples` (`analysis_id`);
 
 ALTER TABLE `samples` ADD FOREIGN KEY (`solvent_id`) REFERENCES `solvents` (`id`);
 
 ALTER TABLE `samples` ADD FOREIGN KEY (`grant_id`) REFERENCES `grants` (`id`);
 
-ALTER TABLE `labs` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+ALTER TABLE `analyses` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+ALTER TABLE `analyses` ADD FOREIGN KEY (`lab_id`) REFERENCES `labs` (`id`);
